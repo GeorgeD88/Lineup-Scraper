@@ -13,7 +13,7 @@ service = ChromeService(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
 
 
-def scrape_lineup() -> list[str]:
+def scrape_lineup(lineup_url: str) -> list[str]:
     """ Scrapes the lineup page and returns a list of all the artist urls. """
 
     # get lineup webpage
@@ -61,13 +61,13 @@ def pull_artist_spotify_id(artist_page_url: str, artist_name: str) -> str:
     return artist_id
 
 
-if __name__ == "__main__":
+def main():
     # URL of the FloridaGrooves festival lineup page
     lineup_url = "https://floridagrovesfest.com/line-up/"
 
     # scrapes the lineup page and returns a generator for the artists
     print('scraping lineup page for artists...\n')
-    artist_links = scrape_lineup()
+    artist_links = scrape_lineup(lineup_url)
 
     # scrape each page for their Spotify link and append to list
     spotify_artist_ids = []
@@ -83,3 +83,7 @@ if __name__ == "__main__":
 
     # closes selenium
     driver.quit()
+
+
+if __name__ == "__main__":
+    main()
